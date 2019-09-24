@@ -148,7 +148,7 @@ namespace ContactListSample.Droid.Services
                     {
                         while (cursor.MoveToNext())
                         {
-                            var contact = await CreateContact(cursor, ctx);
+                            var contact = CreateContact(cursor, ctx);
                             OnContactLoaded?.Invoke(this,new ContactEventArgs(contact));
                             if (!string.IsNullOrWhiteSpace(contact.Name))
                                 contacts.Add(contact);
@@ -164,7 +164,7 @@ namespace ContactListSample.Droid.Services
 
         }
 
-        private static async Task<Contact> CreateContact(ICursor cursor, Context ctx)
+        private static Contact CreateContact(ICursor cursor, Context ctx)
         {
             var contactId = GetString(cursor, ContactsContract.Contacts.InterfaceConsts.Id);
 
