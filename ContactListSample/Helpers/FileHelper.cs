@@ -6,6 +6,7 @@ namespace ContactListSample.Helpers
 {
     public class FileHelper
     {
+        public const string ThumbnailPrefix = "thumb";
         public const string TemporalDirectoryName = "TmpMedia";
 
         public static string GetUniquePath(MediaFileType type, string path, string name)

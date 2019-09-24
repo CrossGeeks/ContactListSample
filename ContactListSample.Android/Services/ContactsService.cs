@@ -37,7 +37,7 @@ namespace ContactListSample.Droid.Services
         bool _isLoading = false;
         public bool IsLoading => _isLoading;
 
-        public static readonly int REQUEST_CONTACTS = 1239;
+        public const int REQUEST_CONTACTS = 1239;
         static string[] PERMISSIONS_CONTACT = {
             Manifest.Permission.ReadContacts
         };
@@ -136,7 +136,7 @@ namespace ContactListSample.Droid.Services
             {
                 var uri = ContactsContract.Contacts.ContentUri;
                 var ctx = Application.Context;
-                await Task.Run(async () =>
+                await Task.Run(() =>
                 {
                     var cursor = ctx.ApplicationContext.ContentResolver.Query(uri, new string[]
                     {
@@ -164,7 +164,7 @@ namespace ContactListSample.Droid.Services
 
         }
 
-        private static Contact CreateContact(ICursor cursor, Context ctx)
+        Contact CreateContact(ICursor cursor, Context ctx)
         {
             var contactId = GetString(cursor, ContactsContract.Contacts.InterfaceConsts.Id);
 
@@ -179,7 +179,7 @@ namespace ContactListSample.Droid.Services
                 {
                     using (var stream = Android.App.Application.Context.ContentResolver.OpenInputStream(Android.Net.Uri.Parse(uri)))
                     {
-                        path = FileHelper.GetOutputPath(MediaFileType.Image, FileHelper.TemporalDirectoryName, $"thumb-{Guid.NewGuid()}");
+                        path = FileHelper.GetOutputPath(MediaFileType.Image, FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
                         using (var fstream = new FileStream(path, FileMode.Create))
                         {
                             stream.CopyTo(fstream);
@@ -208,7 +208,7 @@ namespace ContactListSample.Droid.Services
         }
 
        
-        private static string[] GetNumbers(Context ctx, string contactId)
+        string[] GetNumbers(Context ctx, string contactId)
         {
             var key = ContactsContract.CommonDataKinds.Phone.Number;
 
@@ -223,7 +223,7 @@ namespace ContactListSample.Droid.Services
             return ReadCursorItems(cursor, key)?.ToArray();
         }
 
-        private static string[] GetEmails(Context ctx, string contactId)
+        string[] GetEmails(Context ctx, string contactId)
         {
             var key = ContactsContract.CommonDataKinds.Email.InterfaceConsts.Data;
 
@@ -237,7 +237,7 @@ namespace ContactListSample.Droid.Services
             return ReadCursorItems(cursor, key)?.ToArray();
         }
 
-        private static IEnumerable<string> ReadCursorItems(ICursor cursor, string key)
+        IEnumerable<string> ReadCursorItems(ICursor cursor, string key)
         {
             while (cursor.MoveToNext())
             {
@@ -248,7 +248,7 @@ namespace ContactListSample.Droid.Services
             cursor.Close();
         }
 
-        private static string GetString(ICursor cursor, string key)
+        string GetString(ICursor cursor, string key)
         {
             return cursor.GetString(cursor.GetColumnIndex(key));
         }

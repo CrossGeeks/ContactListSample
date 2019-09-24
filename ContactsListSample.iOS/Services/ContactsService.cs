@@ -91,7 +91,7 @@ namespace ContactListSample.iOS.Services
                         string path = null;
                         if (c.ImageDataAvailable)
                         {
-                            path = FileHelper.GetOutputPath(MediaFileType.Image, FileHelper.TemporalDirectoryName, $"thumb-{Guid.NewGuid()}");
+                            path = FileHelper.GetOutputPath(MediaFileType.Image, FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
 
                             if (!File.Exists(path))
                             {

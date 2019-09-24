@@ -16,7 +16,7 @@ namespace ContactListSample
             MainPage = new NavigationPage(new MainPage(_contactsService));
         }
 
-        protected override async void OnStart()
+        protected override void OnStart()
         {
             // Handle when your app starts
            
@@ -28,7 +28,7 @@ namespace ContactListSample
             // Handle when your app sleeps
         }
 
-        protected async override void OnResume()
+        protected override void OnResume()
         {
           
         }
