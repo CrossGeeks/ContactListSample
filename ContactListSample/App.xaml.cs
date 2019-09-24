@@ -13,7 +13,7 @@ namespace ContactListSample
             _contactsService = contactsService;
             InitializeComponent();
          
-            MainPage = new MainPage(_contactsService);
+            MainPage = new NavigationPage(new MainPage(_contactsService));
         }
 
         protected override async void OnStart()
