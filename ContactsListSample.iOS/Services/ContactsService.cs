@@ -82,6 +82,7 @@ namespace ContactListSample.iOS.Services
                 var keysToFetch = new[] { CNContactKey.PhoneNumbers, CNContactKey.GivenName, CNContactKey.FamilyName, CNContactKey.EmailAddresses, CNContactKey.ImageDataAvailable, CNContactKey.ThumbnailImageData };
 
                 var request = new CNContactFetchRequest(keysToFetch: keysToFetch);
+                request.SortOrder = CNContactSortOrder.GivenName;
 
                 using (var store = new CNContactStore())
                 {
@@ -101,6 +102,7 @@ namespace ContactListSample.iOS.Services
 
                             }
                         }
+
                         var contact = new Contact()
                         {
                             Name = string.IsNullOrEmpty(c.FamilyName) ? c.GivenName : $"{c.GivenName} {c.FamilyName}",
@@ -109,9 +111,13 @@ namespace ContactListSample.iOS.Services
                             Emails = c.EmailAddresses?.Select(p => p?.Value?.ToString()).ToArray(),
 
                         };
-                        OnContactLoaded?.Invoke(this, new ContactEventArgs(contact));
 
-                        contacts.Add(contact);
+                        if (!string.IsNullOrWhiteSpace(contact.Name))
+                        {
+                            OnContactLoaded?.Invoke(this, new ContactEventArgs(contact));
+
+                            contacts.Add(contact);
+                        }
 
                         stop = requestStop;
 

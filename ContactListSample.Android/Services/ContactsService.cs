@@ -143,15 +143,18 @@ namespace ContactListSample.Droid.Services
                         ContactsContract.Contacts.InterfaceConsts.Id,
                         ContactsContract.Contacts.InterfaceConsts.DisplayName,
                         ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri
-                    }, null, null, null);
+                    }, null, null, $"{ContactsContract.Contacts.InterfaceConsts.DisplayName} ASC");
                     if (cursor.Count > 0)
                     {
                         while (cursor.MoveToNext())
                         {
                             var contact = CreateContact(cursor, ctx);
-                            OnContactLoaded?.Invoke(this,new ContactEventArgs(contact));
+                   
                             if (!string.IsNullOrWhiteSpace(contact.Name))
+                            {
+                                OnContactLoaded?.Invoke(this, new ContactEventArgs(contact));
                                 contacts.Add(contact);
+                            }
 
                             if (stopLoad)
                                 break;
