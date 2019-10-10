@@ -2,7 +2,7 @@
 
 
 <p align="center">
-<img width="300" height:"700" src="contact.png" title="iOS"/>
+<img  height:"1000" src="contact.png" title="iOS"/>
 </p>
 
 
