@@ -7,23 +7,33 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              ios:Page.UseSafeArea="true">
     <ContentPage.Content>
-             <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-             <SearchBar
-                        x:Name="filterText"
-                        Grid.Row="0"
+      <StackLayout>
+            <SearchBar x:Name="filterText"
                         HeightRequest="40"
                         Text="{Binding SearchText}" />
-            <ListView   Grid.Row="1" ItemsSource="{Binding FilteredContacts}">
+            <ListView   ItemsSource="{Binding FilteredContacts}"
+                        HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell ImageSource="{Binding Image}"  Text="{Binding Name}" />
+                      <ViewCell>
+                            <StackLayout Padding="10"
+                                         Orientation="Horizontal">
+                                <Image  Source="{Binding Image}"
+                                        VerticalOptions="Center"
+                                        x:Name="image"
+                                        Aspect="AspectFit"
+                                        HeightRequest="60"/>
+                              <StackLayout VerticalOptions="Center">
+                                <Label Text="{Binding Name}"
+                                       FontAttributes="Bold"/>
+                                <Label Text="{Binding PhoneNumbers[0]}"/>
+                                 <Label Text="{Binding Emails[0]}"/>
+                            </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
                      </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
