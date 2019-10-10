@@ -9,11 +9,11 @@ namespace ContactListSample.Helpers
         public const string ThumbnailPrefix = "thumb";
         public const string TemporalDirectoryName = "TmpMedia";
 
-        public static string GetUniquePath(MediaFileType type, string path, string name)
+        public static string GetUniquePath(string path, string name)
         {
             string ext = Path.GetExtension(name);
             if (ext == string.Empty)
-                ext = ((type == MediaFileType.Image) ? ".jpg" : ".mp4");
+                ext = ".jpg";
 
             name = Path.GetFileNameWithoutExtension(name);
 
@@ -26,7 +26,7 @@ namespace ContactListSample.Helpers
         }
 
 
-        public static string GetOutputPath(MediaFileType type, string path, string name)
+        public static string GetOutputPath(string path, string name)
         {
             path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), path);
             Directory.CreateDirectory(path);
@@ -34,13 +34,10 @@ namespace ContactListSample.Helpers
             if (string.IsNullOrWhiteSpace(name))
             {
                 string timestamp = DateTime.Now.ToString("yyyMMdd_HHmmss");
-                if (type == MediaFileType.Image)
-                    name = "IMG_" + timestamp + ".jpg";
-                else
-                    name = "VID_" + timestamp + ".mp4";
+                name = "IMG_" + timestamp + ".jpg";
             }
 
-            return Path.Combine(path, GetUniquePath(type, path, name));
+            return Path.Combine(path, GetUniquePath(path, name));
         }
     }
 }

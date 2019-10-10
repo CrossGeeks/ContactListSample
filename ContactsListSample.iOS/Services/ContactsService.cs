@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -9,9 +8,7 @@ using Contacts;
 using ContactListSample.Helpers;
 using ContactListSample.Models;
 using ContactListSample.Services;
-using ContactsUI;
 using Foundation;
-using UIKit;
 
 namespace ContactListSample.iOS.Services
 {
@@ -92,7 +89,7 @@ namespace ContactListSample.iOS.Services
                         string path = null;
                         if (c.ImageDataAvailable)
                         {
-                            path = FileHelper.GetOutputPath(MediaFileType.Image, FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
+                            path = FileHelper.GetOutputPath(FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
 
                             if (!File.Exists(path))
                             {

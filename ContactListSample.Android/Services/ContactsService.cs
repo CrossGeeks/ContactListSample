@@ -12,10 +12,7 @@ using Android.Content.PM;
 using Android.Database;
 using Android.Provider;
 using Android.Runtime;
-using Android.Support.Design.Widget;
 using Android.Support.V4.App;
-using Android.Util;
-using Android.Widget;
 using ContactListSample.Helpers;
 using ContactListSample.Models;
 using ContactListSample.Services;
@@ -182,7 +179,7 @@ namespace ContactListSample.Droid.Services
                 {
                     using (var stream = Android.App.Application.Context.ContentResolver.OpenInputStream(Android.Net.Uri.Parse(uri)))
                     {
-                        path = FileHelper.GetOutputPath(MediaFileType.Image, FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
+                        path = FileHelper.GetOutputPath(FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
                         using (var fstream = new FileStream(path, FileMode.Create))
                         {
                             stream.CopyTo(fstream);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-
+﻿
 namespace ContactListSample.Models
 {
     public class Contact
