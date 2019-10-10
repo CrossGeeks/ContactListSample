@@ -6,4 +6,4 @@
 </p>
 
 
-Blog post: https:/xamboy.com
+Blog post: http://www.xamboy.com/2019/10/10/getting-phone-contacts-in-xamarin-forms/
