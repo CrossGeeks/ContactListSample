@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Contacts;
-using ContactListSample.Helpers;
 using ContactListSample.Models;
 using ContactListSample.Services;
 using Foundation;
@@ -14,6 +13,8 @@ namespace ContactListSample.iOS.Services
 {
     public class ContactsService : NSObject, IContactsService
     {
+        const string ThumbnailPrefix = "thumb";
+
         bool requestStop = false;
 
         public event EventHandler<ContactEventArgs> OnContactLoaded;
@@ -89,7 +90,7 @@ namespace ContactListSample.iOS.Services
                         string path = null;
                         if (c.ImageDataAvailable)
                         {
-                            path = FileHelper.GetOutputPath(FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
+                            path = path = Path.Combine(Path.GetTempPath(), $"{ThumbnailPrefix}-{Guid.NewGuid()}");
 
                             if (!File.Exists(path))
                             {

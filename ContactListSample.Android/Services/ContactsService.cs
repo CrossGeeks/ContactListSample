@@ -13,7 +13,6 @@ using Android.Database;
 using Android.Provider;
 using Android.Runtime;
 using Android.Support.V4.App;
-using ContactListSample.Helpers;
 using ContactListSample.Models;
 using ContactListSample.Services;
 using Plugin.CurrentActivity;
@@ -22,6 +21,7 @@ namespace ContactListSample.Droid.Services
 {
     public class ContactsService :  IContactsService
     {
+        const string ThumbnailPrefix = "thumb";
         bool stopLoad = false;
         static TaskCompletionSource<bool> contactPermissionTcs;
         public string TAG
@@ -34,8 +34,8 @@ namespace ContactListSample.Droid.Services
         bool _isLoading = false;
         public bool IsLoading => _isLoading;
 
-        public const int REQUEST_CONTACTS = 1239;
-        static string[] PERMISSIONS_CONTACT = {
+        public const int RequestContacts = 1239;
+        static string[] PermissionsContact = {
             Manifest.Permission.ReadContacts
         };
 
@@ -56,12 +56,12 @@ namespace ContactListSample.Droid.Services
             else
             {
                 // Contact permissions have not been granted yet. Request them directly.
-                ActivityCompat.RequestPermissions(CrossCurrentActivity.Current.Activity, PERMISSIONS_CONTACT, REQUEST_CONTACTS);
+                ActivityCompat.RequestPermissions(CrossCurrentActivity.Current.Activity, PermissionsContact, RequestContacts);
             }
         }
         public static void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-            if (requestCode == ContactsService.REQUEST_CONTACTS)
+            if (requestCode == ContactsService.RequestContacts)
             {
                 // We have requested multiple permissions for contacts, so all of them need to be
                 // checked.
@@ -179,7 +179,7 @@ namespace ContactListSample.Droid.Services
                 {
                     using (var stream = Android.App.Application.Context.ContentResolver.OpenInputStream(Android.Net.Uri.Parse(uri)))
                     {
-                        path = FileHelper.GetOutputPath(FileHelper.TemporalDirectoryName, $"{FileHelper.ThumbnailPrefix}-{Guid.NewGuid()}");
+                        path = Path.Combine(Path.GetTempPath(), $"{ThumbnailPrefix}-{Guid.NewGuid()}");
                         using (var fstream = new FileStream(path, FileMode.Create))
                         {
                             stream.CopyTo(fstream);
